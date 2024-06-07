@@ -3,8 +3,13 @@ package dev.elshan.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
 @Entity
+@Table(name = "products")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductEntity {
 
     @Id
