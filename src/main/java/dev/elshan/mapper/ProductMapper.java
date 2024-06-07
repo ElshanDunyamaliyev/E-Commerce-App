@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Mapper(componentModel = "spring")
-public interface ProductMapper {
-    ProductDto mapToDto(ProductEntity productEntity);
-    ProductEntity mapToEntity(ProductDto productDto);
+public abstract class ProductMapper {
+    public abstract ProductDto mapToDto(ProductEntity productEntity);
+    public abstract ProductEntity mapToEntity(ProductDto productDto);
 }
