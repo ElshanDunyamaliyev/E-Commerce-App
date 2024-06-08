@@ -9,25 +9,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping()
 @RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping
+    @GetMapping("/products")
     public List<ProductDto> getAllProducts() {
         return productService.getAllProducts();
     }
 
-    @GetMapping("/{productId}")
+    @GetMapping("/products/{productId}")
     public ProductDto getProductById(@PathVariable Long productId) {
         return productService.getProductById(productId);
     }
 
-    @PostMapping
-    public void addProduct(@RequestBody ProductDto productDto) {
-        productService.createProduct(productDto);
+    @PostMapping("/categories/{categoryId}/product")
+    public void addProduct(@PathVariable Long categoryId,@RequestBody ProductDto productDto) {
+        productService.createProduct(categoryId,productDto);
     }
 
     @PatchMapping("/{productId}")

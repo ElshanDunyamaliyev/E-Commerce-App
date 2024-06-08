@@ -26,4 +26,7 @@ public class ProductEntity {
     private double price;
     private double discount;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private CategoryEntity category;
 }

@@ -1,8 +1,10 @@
 package dev.elshan.service;
 
 import dev.elshan.dto.ProductDto;
+import dev.elshan.entity.CategoryEntity;
 import dev.elshan.entity.ProductEntity;
 import dev.elshan.mapper.ProductMapper;
+import dev.elshan.repository.CategoryRepository;
 import dev.elshan.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
     private final ProductMapper productMapper;
 
     public List<ProductDto> getAllProducts() {
@@ -25,9 +28,13 @@ public class ProductService {
         return productMapper.mapToDto(productEntity);
     }
 
-    public void createProduct(ProductDto productDto) {
-        ProductEntity productEntity = productMapper.mapToEntity(productDto);
-        productRepository.save(productEntity);
+    public void createProduct(Long categoryId,ProductDto productDto) {
+        CategoryEntity category = categoryRepository.findById(categoryId).orElseThrow();
+        ProductEntity product = productMapper.mapToEntity(productDto);
+        product.setCategory(category);
+        category.getProducts().add(product);
+        productRepository.save(product);
+        categoryRepository.save(category);
     }
 
     public void updateProduct(Long productId,ProductDto productDto) {
