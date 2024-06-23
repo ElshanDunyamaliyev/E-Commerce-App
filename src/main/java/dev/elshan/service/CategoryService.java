@@ -4,6 +4,7 @@ import dev.elshan.dto.CategoryDto;
 import dev.elshan.dto.ProductDto;
 import dev.elshan.entity.CategoryEntity;
 import dev.elshan.entity.ProductEntity;
+import dev.elshan.exception.ResourceNotFoundException;
 import dev.elshan.mapper.CategoryMapper;
 import dev.elshan.mapper.ProductMapper;
 import dev.elshan.repository.CategoryRepository;
@@ -28,7 +29,7 @@ public class CategoryService {
     }
 
     public CategoryDto getCategoryById(Long categoryId) {
-        CategoryEntity productEntity =  categoryRepository.findById(categoryId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        CategoryEntity productEntity =  categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category",categoryId));
         return categoryMapper.mapToDto(productEntity);
     }
 
@@ -38,7 +39,7 @@ public class CategoryService {
     }
 
     public void updateCategory(Long categoryId,CategoryDto categoryDto) {
-        CategoryEntity categoryEntity = categoryRepository.findById(categoryId).orElseThrow();
+        CategoryEntity categoryEntity = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category",categoryId));
         categoryEntity.setCategoryName(categoryDto.getCategoryName());
         categoryRepository.save(categoryEntity);
     }
