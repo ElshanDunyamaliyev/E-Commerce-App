@@ -2,6 +2,8 @@ package dev.elshan.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.util.List;
@@ -19,6 +21,7 @@ public class CategoryEntity {
     @Column(name = "category_id")
     private Long categoryId;
     @Column(name = "category_name")
+    @NotBlank
     private String categoryName;
 
     @OneToMany(mappedBy = "category", cascade =  CascadeType.ALL )

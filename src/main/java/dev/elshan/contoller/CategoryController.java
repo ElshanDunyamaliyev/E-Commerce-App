@@ -3,6 +3,7 @@ package dev.elshan.contoller;
 import dev.elshan.dto.CategoryDto;
 import dev.elshan.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class CategoryController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void addCategory(@RequestBody CategoryDto categoryDto) {
         categoryService.createCategory(categoryDto);
     }
@@ -35,6 +37,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{categoryId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProductById(@PathVariable Long categoryId) {
         categoryService.deleteCategory(categoryId);
     }
