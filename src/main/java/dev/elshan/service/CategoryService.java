@@ -12,8 +12,13 @@ import dev.elshan.repository.CategoryRepository;
 import dev.elshan.repository.ProductRepository;
 import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -26,8 +31,13 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
 
-    public List<CategoryDto> getAllCategories() {
-        return categoryRepository.findAll().stream().map(categoryMapper::mapToDto).toList();
+    public List<CategoryDto> getAllCategories(Integer pageNumber, Integer pageSize,
+                                              String sortOrder,String sortBy) {
+        Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(pageNumber, pageSize,sortByAndOrder);
+        Page<CategoryEntity> categoryPage = categoryRepository.findAll(pageable);
+        List<CategoryEntity> categories = categoryPage.getContent();
+        return categories.stream().map(categoryMapper::mapToDto).toList();
     }
 
     public CategoryDto getCategoryById(Long categoryId) {

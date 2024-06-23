@@ -12,9 +12,8 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExceptionDto {
+public class ExceptionResponse {
 
     private String message;
-    private HttpStatus httpStatus;
-    private LocalDateTime time;
+    private Boolean status;
 }

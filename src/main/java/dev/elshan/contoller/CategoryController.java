@@ -16,8 +16,9 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public List<CategoryDto> getAllCategories() {
-        return categoryService.getAllCategories();
+    public List<CategoryDto> getAllCategories(@RequestParam(required = false,defaultValue = "0") Integer pageNumber,@RequestParam(required = false,defaultValue = "20") Integer pageSize,
+                                              @RequestParam(required = false,defaultValue = "asc") String sortOrder,@RequestParam(required = false,defaultValue = "categoryId") String sortBy) {
+        return categoryService.getAllCategories(pageNumber,pageSize,sortOrder,sortBy);
     }
 
     @GetMapping("/{categoryId}")
