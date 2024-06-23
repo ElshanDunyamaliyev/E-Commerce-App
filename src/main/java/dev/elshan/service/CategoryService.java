@@ -4,11 +4,13 @@ import dev.elshan.dto.CategoryDto;
 import dev.elshan.dto.ProductDto;
 import dev.elshan.entity.CategoryEntity;
 import dev.elshan.entity.ProductEntity;
+import dev.elshan.exception.ApiException;
 import dev.elshan.exception.ResourceNotFoundException;
 import dev.elshan.mapper.CategoryMapper;
 import dev.elshan.mapper.ProductMapper;
 import dev.elshan.repository.CategoryRepository;
 import dev.elshan.repository.ProductRepository;
+import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,10 @@ public class CategoryService {
     }
 
     public void createCategory(CategoryDto categoryDto) {
+        Category category = categoryRepository.findByCategoryName(categoryDto.getCategoryName());
+        if(category != null){
+            throw new ApiException("Category with this name exists: " + categoryDto.getCategoryName());
+        }
         CategoryEntity categoryEntity = categoryMapper.mapToEntity(categoryDto);
         categoryRepository.save(categoryEntity);
     }
