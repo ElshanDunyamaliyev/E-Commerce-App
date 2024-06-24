@@ -28,12 +28,11 @@ public class ProductService {
     public List<ProductDto> getProductsByCategory(Long categoryId){
         CategoryEntity category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("category",categoryId));
         List<ProductEntity> productEntity = productRepository.findProductEntityByCategoryOrderByPriceAsc(category);
-        List<ProductDto> productDtos = productEntity.stream().map(productMapper::mapToDto).collect(Collectors.toList());
-        return productDtos;
+        return productEntity.stream().map(productMapper::mapToDto).collect(Collectors.toList());
     }
 
     public List<ProductDto> getProductsByKeyword(String keyword){
-        List<ProductEntity> productEntity = productRepository.findProductEntityByProductNameLikeIgnoreCase(keyword);
+        List<ProductEntity> productEntity = productRepository.findProductEntityByProductNameLikeIgnoreCase("%" + keyword + "%");
         return productEntity.stream().map(productMapper::mapToDto).collect(Collectors.toList());
     }
 
