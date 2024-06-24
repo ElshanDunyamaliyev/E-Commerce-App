@@ -1,5 +1,6 @@
 package dev.elshan.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,9 +25,11 @@ public class ProductEntity {
     private String description;
     private Integer quantity;
     private double price;
-    private double discount;
+    private double discountPercent;
+    private double discountPrice;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @JsonIgnore
     private CategoryEntity category;
 }
