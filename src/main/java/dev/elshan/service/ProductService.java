@@ -32,6 +32,11 @@ public class ProductService {
         return productDtos;
     }
 
+    public List<ProductDto> getProductsByKeyword(String keyword){
+        List<ProductEntity> productEntity = productRepository.findProductEntityByProductNameLikeIgnoreCase(keyword);
+        return productEntity.stream().map(productMapper::mapToDto).collect(Collectors.toList());
+    }
+
     public ProductDto getProductById(Long productId) {
         ProductEntity productEntity =  productRepository.findById(productId).orElseThrow();
         return productMapper.mapToDto(productEntity);

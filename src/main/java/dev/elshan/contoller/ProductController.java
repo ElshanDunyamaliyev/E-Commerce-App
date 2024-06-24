@@ -30,6 +30,11 @@ public class ProductController {
         return productService.getProductsByCategory(categoryId);
     }
 
+    @GetMapping("/products/keyword/{keyword}")
+    public List<ProductDto> getProductsByKeyword(@PathVariable String keyword) {
+        return productService.getProductsByKeyword(keyword);
+    }
+
     @PostMapping("/categories/{categoryId}/products")
     public void addProduct(@PathVariable Long categoryId,@RequestBody ProductDto productDto) {
         productService.createProduct(categoryId,productDto);
