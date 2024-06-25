@@ -32,4 +32,8 @@ public class ProductEntity {
     @JoinColumn(name = "category_id")
     @JsonIgnore
     private CategoryEntity category;
+
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
+    private User user;
 }
